@@ -9,7 +9,7 @@ Execute this shellcode in the target process using CreateRemoteThread.
 The shellcode is executed within the target process as follows: Base Relocation
 Import table resolution (filling the IAT with the passed LoadLibraryA / GetProcAddress)
 TLS callback (if present)SEH table registration (RtlAddFunctionTable, optional)
-Finally, the DLL's DllMain(DLL_PROCESS_ATTACH) is called.Therefore: Injection method = Manual Mapping + CreateRemoteThread execution of shellcode.Function Overview
+Finally, the DLL's DllMain(DLL_PROCESS_ATTACH) is called.Therefore: Injection method = Manual Mapping + CreateRemoteThread execution of shellcode.Function
 
 1. Processes and Injection
 
@@ -60,4 +60,5 @@ After injection, the memory containing the shellcode and MANUAL_MAPPING_DATA is 
 Polling `ReadProcessMemory` checks if `MANUAL_MAPPING_DATA.hMod` has been filled with shellcode to confirm that `DllMain` has been executed; a value of 0x404040 indicates an error within the shellcode.
 
 5. Execution Behavior
+
 After successful injection, it will print "[+] Injected!", then suspend indefinitely using `while (true) Sleep(1000)` without exiting (possibly to maintain the process or facilitate debugging).
